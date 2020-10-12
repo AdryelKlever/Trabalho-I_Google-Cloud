@@ -35,3 +35,27 @@ function portServer(val){
 
     return false;
 }
+
+function onError(error){
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+
+    const bind = typeof port === 'string' ? 
+        'Pipe ' + port : 
+        'Port ' + port;
+
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' Requer Privilégios Elevados!');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' Já está em uso!');
+            process.exit(1);
+            break;
+        default:
+        throw error;
+
+    }
+}
